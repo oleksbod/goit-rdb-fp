@@ -1,0 +1,18 @@
+USE pandemic;
+
+DELIMITER $$
+
+CREATE FUNCTION year_difference(year INT) 
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE start_date DATE;
+    SET start_date = CONCAT(year, '-01-01');
+    RETURN TIMESTAMPDIFF(YEAR, start_date, CURDATE());
+END $$
+
+DELIMITER ;
+
+USE pandemic;
+SELECT Year, year_difference(Year) AS year_difference
+FROM infectious_cases;

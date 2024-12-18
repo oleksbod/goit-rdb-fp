@@ -1,0 +1,9 @@
+USE pandemic;
+
+SELECT 
+    Year,
+    CONCAT(Year, '-01-01') AS year_start_date,
+    CURDATE() AS cur_date,
+    TIMESTAMPDIFF(YEAR, CONCAT(Year, '-01-01'), CURDATE()) AS year_difference
+FROM 
+    infectious_cases;

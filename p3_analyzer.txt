@@ -1,0 +1,19 @@
+/*3NF*/
+USE pandemic;
+
+SELECT 
+    Entity,
+    Code,
+    AVG(CAST(Number_rabies AS UNSIGNED)) AS avg_rabies,
+    MIN(CAST(Number_rabies AS UNSIGNED)) AS min_rabies,
+    MAX(CAST(Number_rabies AS UNSIGNED)) AS max_rabies,
+    SUM(CAST(Number_rabies AS UNSIGNED)) AS sum_rabies
+FROM 
+    infectious_cases
+WHERE 
+    Number_rabies != ''
+GROUP BY 
+    Entity, Code
+ORDER BY 
+    avg_rabies DESC
+LIMIT 10;

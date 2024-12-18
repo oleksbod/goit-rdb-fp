@@ -1,0 +1,158 @@
+/*3NF*/
+USE pandemic;
+
+CREATE TABLE locations (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    entity VARCHAR(255) NOT NULL,
+    code VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE diseases (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE infectious_cases_normalized (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    location_id INT,
+    year INT NOT NULL,
+    disease_id INT,
+    number_of_cases DECIMAL(20,9) NOT NULL,
+    FOREIGN KEY (location_id) REFERENCES locations(id),
+    FOREIGN KEY (disease_id) REFERENCES diseases(id)
+);
+
+/*insert*/
+INSERT INTO locations (entity, code)
+SELECT DISTINCT Entity, Code
+FROM infectious_cases;
+
+INSERT INTO diseases (name) VALUES
+('yaws'),
+('polio'),
+('guinea_worm'),
+('rabies'),
+('malaria'),
+('hiv'),
+('tuberculosis'),
+('smallpox'),
+('cholera');
+
+-- yaws --
+INSERT INTO infectious_cases_normalized (location_id, Year, disease_id, number_of_cases)
+SELECT 
+    l.id,
+    ic.Year,
+    d.id,
+    CAST(ic.Number_yaws AS DECIMAL(20,9)) AS number_of_cases
+FROM 
+    infectious_cases ic
+JOIN locations l ON ic.Entity = l.entity AND ic.Code = l.code
+JOIN diseases d ON d.name = 'yaws'
+WHERE ic.Number_yaws IS NOT NULL AND ic.Number_yaws != '';
+
+-- polio --
+INSERT INTO infectious_cases_normalized (location_id, Year, disease_id, number_of_cases)
+SELECT 
+    l.id,
+    ic.Year,
+    d.id,
+    CAST(ic.polio_cases AS DECIMAL(20,9)) AS number_of_cases
+FROM 
+    infectious_cases ic
+JOIN locations l ON ic.Entity = l.entity AND ic.Code = l.code
+JOIN diseases d ON d.name = 'polio'
+WHERE ic.polio_cases IS NOT NULL AND ic.polio_cases != '';
+
+-- guinea_worm --
+INSERT INTO infectious_cases_normalized (location_id, Year, disease_id, number_of_cases)
+SELECT 
+    l.id,
+    ic.Year,
+    d.id,
+    CAST(ic.cases_guinea_worm AS DECIMAL(20,9)) AS number_of_cases
+FROM 
+    infectious_cases ic
+JOIN locations l ON ic.Entity = l.entity AND ic.Code = l.code
+JOIN diseases d ON d.name = 'guinea_worm'
+WHERE ic.cases_guinea_worm IS NOT NULL AND ic.cases_guinea_worm != '';
+
+-- rabies 
+INSERT INTO infectious_cases_normalized (location_id, Year, disease_id, number_of_cases)
+SELECT 
+    l.id,
+    ic.Year,
+    d.id,
+    CAST(ic.Number_rabies AS DECIMAL(20,9)) AS number_of_cases
+FROM 
+    infectious_cases ic
+JOIN locations l ON ic.Entity = l.entity AND ic.Code = l.code
+JOIN diseases d ON d.name = 'rabies'
+WHERE ic.Number_rabies IS NOT NULL AND ic.Number_rabies != '';
+
+-- malaria --
+INSERT INTO infectious_cases_normalized (location_id, Year, disease_id, number_of_cases)
+SELECT 
+    l.id,
+    ic.Year,
+    d.id,
+    CAST(ic.Number_malaria AS DECIMAL(20,9)) AS number_of_cases
+FROM 
+    infectious_cases ic
+JOIN locations l ON ic.Entity = l.entity AND ic.Code = l.code
+JOIN diseases d ON d.name = 'malaria'
+WHERE ic.Number_malaria IS NOT NULL AND ic.Number_malaria != '';
+
+-- hiv --
+INSERT INTO infectious_cases_normalized (location_id, Year, disease_id, number_of_cases)
+SELECT 
+    l.id,
+    ic.Year,
+    d.id,
+    CAST(ic.Number_hiv AS DECIMAL(20,9)) AS number_of_cases
+FROM 
+    infectious_cases ic
+JOIN locations l ON ic.Entity = l.entity AND ic.Code = l.code
+JOIN diseases d ON d.name = 'hiv'
+WHERE ic.Number_hiv IS NOT NULL AND ic.Number_hiv != '';
+
+-- tuberculosis --
+INSERT INTO infectious_cases_normalized (location_id, Year, disease_id, number_of_cases)
+SELECT 
+    l.id,
+    ic.Year,
+    d.id,
+    CAST(ic.Number_tuberculosis AS DECIMAL(20,9)) AS number_of_cases
+FROM 
+    infectious_cases ic
+JOIN locations l ON ic.Entity = l.entity AND ic.Code = l.code
+JOIN diseases d ON d.name = 'tuberculosis'
+WHERE ic.Number_tuberculosis IS NOT NULL AND ic.Number_tuberculosis != '';
+
+-- smallpox --
+INSERT INTO infectious_cases_normalized (location_id, Year, disease_id, number_of_cases)
+SELECT 
+    l.id,
+    ic.Year,
+    d.id,
+    CAST(ic.Number_smallpox AS DECIMAL(20,9)) AS number_of_cases
+FROM 
+    infectious_cases ic
+JOIN locations l ON ic.Entity = l.entity AND ic.Code = l.code
+JOIN diseases d ON d.name = 'smallpox'
+WHERE ic.Number_smallpox IS NOT NULL AND ic.Number_smallpox != '';
+
+-- cholera --
+INSERT INTO infectious_cases_normalized (location_id, Year, disease_id, number_of_cases)
+SELECT 
+    l.id,
+    ic.Year,
+    d.id,
+    CAST(ic.Number_cholera_cases AS DECIMAL(20,9)) AS number_of_cases
+FROM 
+    infectious_cases ic
+JOIN locations l ON ic.Entity = l.entity AND ic.Code = l.code
+JOIN diseases d ON d.name = 'cholera'
+WHERE ic.Number_cholera_cases IS NOT NULL AND ic.Number_cholera_cases != '';
+
+

@@ -1,0 +1,6 @@
+CREATE DATABASE pandemic;
+
+USE pandemic;
+
+select *
+from infectious_cases
