@@ -1,4 +1,3 @@
-/*3NF*/
 USE pandemic;
 
 SELECT 
